@@ -19,6 +19,8 @@ import {
 } from "./utils";
 import { WebpackOptions } from "./types";
 
+import checkDefaults from "./utils/checkDefaults";
+
 /**
  *
  * Generator for initializing a webpack config
@@ -102,6 +104,7 @@ export default class InitGenerator extends Generator {
 		const self: this = this;
 		let regExpForStyles: string;
 		let ExtractUseProps: Loader[];
+		let isUsingDefaults: boolean;
 
 		process.stdout.write(
 			`\n${logSymbols.info}${chalk.blue(" INFO ")} ` +
@@ -117,8 +120,11 @@ export default class InitGenerator extends Generator {
 			Confirm("multiEntries", "Will your application have multiple bundles?", false)
 		]);
 
+		checkDefaults("multiEntries", multiEntries);
+
 		// TODO string | object
 		const entryOption: void | {} = await entryQuestions(self, multiEntries);
+		checkDefaults("entryOption", entryOption);
 
 		if (typeof entryOption === "string" && entryOption.length > 0) {
 			this.configuration.config.webpackOptions.entry = `${entryOption}`;
@@ -129,6 +135,7 @@ export default class InitGenerator extends Generator {
 		const { outputDir } = await this.prompt([
 			Input("outputDir", "In which folder do you want to store your generated bundles?", "dist")
 		]);
+		checkDefaults("outputDir", outputDir);
 
 		// As entry is not required anymore and we dont set it to be an empty string or """""
 		// it can be undefined so falsy check is enough (vs entry.length);
@@ -149,6 +156,7 @@ export default class InitGenerator extends Generator {
 		const { langType } = await this.prompt([
 			List("langType", "Will you use one of the below JS solutions?", [LangType.ES6, LangType.Typescript, "No"])
 		]);
+		checkDefaults("langType", langType);
 
 		langQuestionHandler(this, langType);
 		this.langType = langType;
@@ -162,7 +170,7 @@ export default class InitGenerator extends Generator {
 				StylingType.PostCSS
 			])
 		]);
-
+		checkDefaults("stylingType", stylingType);
 		({ ExtractUseProps, regExpForStyles } = styleQuestionHandler(self, stylingType));
 
 		if (this.isProd) {
@@ -205,6 +213,7 @@ export default class InitGenerator extends Generator {
 				});
 			}
 		}
+		console.log({ entryOption, langType, stylingType, outputDir, multiEntries });
 		if (!this.isProd) {
 			this.dependencies.push("html-webpack-plugin");
 			const htmlWebpackDependency = "html-webpack-plugin";

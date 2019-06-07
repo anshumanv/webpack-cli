@@ -8,9 +8,7 @@ import { defaultConfig } from "./constants";
  * @returns {Boolean} - Whether the default config is used or not.
  */
 
-export default function checkDefaults(initConfig: Record<string, any>): boolean {
-	return initConfig.every((property: string): boolean => {
-		const propertyName = Object.keys(property)[0];
-		return defaultConfig[propertyName] === property[propertyName];
-	});
+export default function checkDefaults(property: string, value: any): boolean {
+	console.log({ property, value });
+	return defaultConfig[property] === value;
 }
