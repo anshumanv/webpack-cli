@@ -23,12 +23,14 @@ module.exports = {
             type: String,
             usage: 'init | init <scaffold>',
             description: 'Initialize a new webpack configuration',
+            command: 'init',
         },
         {
             name: 'migrate',
             type: String,
             usage: 'migrate',
             description: 'Migrate a configuration to a new version',
+            command: 'migrate',
         },
         {
             name: 'loader',
@@ -37,6 +39,7 @@ module.exports = {
             type: String,
             usage: 'loader',
             description: 'Scaffold a loader repository',
+            command: 'generate-loader',
         },
         {
             name: 'plugin',
@@ -45,6 +48,7 @@ module.exports = {
             type: String,
             usage: 'plugin',
             description: 'Scaffold a plugin repository',
+            command: 'generate-plugin',
         },
         {
             name: 'info',
@@ -52,6 +56,7 @@ module.exports = {
             type: String,
             usage: 'info [options]',
             description: 'Outputs information about your system and dependencies',
+            command: 'info',
             flags: [
                 {
                     name: 'output',
@@ -67,6 +72,7 @@ module.exports = {
             type: String,
             usage: 'serve',
             description: 'Run the webpack Dev Server',
+            command: 'serve',
         },
     ],
     core: [

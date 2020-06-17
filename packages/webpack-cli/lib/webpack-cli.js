@@ -1,18 +1,9 @@
 const GroupHelper = require('./utils/GroupHelper');
 const { Compiler } = require('./utils/Compiler');
-const { groups, core } = require('./utils/cli-flags');
+const { groups, core, commands } = require('./utils/cli-flags');
 const webpackMerge = require('webpack-merge');
 const { toKebabCase } = require('./utils/helpers');
 const argParser = require('./utils/arg-parser');
-
-const defaultCommands = {
-    init: 'init',
-    loader: 'generate-loader',
-    plugin: 'generate-plugin',
-    info: 'info',
-    migrate: 'migrate',
-    serve: 'serve',
-};
 
 class WebpackCLI extends GroupHelper {
     constructor() {
@@ -258,7 +249,7 @@ class WebpackCLI extends GroupHelper {
 
     async runCommand(command, ...args) {
         // TODO: rename and depreciate init
-        return await require('./commands/ExternalCommand').run(defaultCommands[command.name], ...args);
+        return await require('./commands/ExternalCommand').run(commands[command.name].command, ...args);
     }
 
     runHelp(args) {
