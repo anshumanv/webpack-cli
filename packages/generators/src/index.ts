@@ -23,13 +23,24 @@ class GeneratorsCommand {
             [
                 {
                     name: 'auto',
-                    type: Boolean,
+                    simpleType: 'boolean',
+                    configs: [
+                        {
+                            type: 'boolean',
+                        },
+                    ],
                     description: 'To generate default config',
+                    multiple: false,
                 },
                 {
                     name: 'generation-path',
-                    type: String,
+                    configs: [
+                        {
+                            type: 'boolean',
+                        },
+                    ],
                     description: 'To scaffold in a specified path',
+                    multiple: false,
                 },
             ],
             async (scaffold, options) => {
